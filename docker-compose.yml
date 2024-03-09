@@ -1,0 +1,94 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: dcard
+    ports:
+      - "5432:5432"  # service port 5432 map to host port 5432
+    networks:
+      - goserver-network
+
+  nginx-lb:
+    image: nginx:latest
+    ports:
+      - "8080:80" # service port 80 map to host port 8080
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - goserver-network
+
+  goserver1:
+    image: goserver
+    networks:
+      - goserver-network
+
+  goserver2:
+    image: goserver
+    networks:
+      - goserver-network
+
+  goserver3:
+    image: goserver
+    networks:
+      - goserver-network
+
+  goserver4:
+    image: goserver
+    networks:
+      - goserver-network
+
+  goserver5:
+    image: goserver
+    networks:
+      - goserver-network
+
+  goserver6:
+    image: goserver
+    networks:
+      - goserver-network
+
+  goserver7:
+    image: goserver
+    networks:
+      - goserver-network
+
+  goserver8:
+    image: goserver
+    networks:
+      - goserver-network
+
+  goserver9:
+    image: goserver
+    networks:
+      - goserver-network
+
+  goserver10:
+    image: goserver
+    networks:
+      - goserver-network
+
+  goserver11:
+    image: goserver
+    networks:
+      - goserver-network
+
+  goserver12:
+    image: goserver
+    networks:
+      - goserver-network
+  
+
+  my-redis:
+    image: redis:latest
+    command: redis-server --port 6379 --maxmemory 2gb --maxmemory-policy allkeys-lru --tcp-backlog 511 --maxclients 10000
+    ports:
+      - "6379:6379"
+    networks:
+      - goserver-network
+
+networks:
+  goserver-network:
+    external: true
